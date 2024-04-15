@@ -26,3 +26,10 @@ Since real time image used for object detection, inference time is higher, so us
 - conda activate isd
 - pip install -r requirements.txt
 - python app.py
+
+# AWS Configurations
+#aws cli download link: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+
+```bash
+aws configure
+```

@@ -4,12 +4,9 @@ from isd.logger import logging
 from isd.exception import isdException
 from isd.configuration.s3_operations import S3Operation
 from isd.constant.training_pipeline import *
-from isd.entity.config_entity import DataIngestionConfig, DataValidationConfig, ModelTrainerConfig, ModelPusherConfig
-from isd.entity.artifacts_entity import DataIngestionArtifact, DataValidationArtifact, ModelTrainerArtifact, ModelPusherArtifact
+from isd.entity.config_entity import DataIngestionConfig
+from isd.entity.artifacts_entity import DataIngestionArtifact
 from isd.components.data_ingestion import DataIngestion
-from isd.components.data_validation import DataValidation
-from isd.components.model_trainer import ModelTraining
-from isd.components.model_pusher import ModelPusher
 
 
 
@@ -17,10 +14,7 @@ from isd.components.model_pusher import ModelPusher
 class TrainingPipeline:
     def __init__(self):
         self.s3_operations= S3Operation()
-        self.data_ingestion_config= DataIngestionConfig()
-        self.data_validation_config= DataValidationConfig()
-        self.model_trainer_config= ModelTrainerConfig()
-        self.model_pusher_config= ModelPusherConfig()
+        self.data_ingestion_config= DataIngestionConfig()      
         
     
     def start_data_ingestion(self) -> DataIngestionArtifact:

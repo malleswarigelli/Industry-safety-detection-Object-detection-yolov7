@@ -19,7 +19,7 @@ class S3Operation:
         self.s3_resource = boto3.resource("s3")
 
     
-    def download_object(self, key, bucket_name, filename):
+    def download_object(self,key, bucket_name, filename):
         bucket = self.s3_resource.Bucket(bucket_name)
         bucket.download_file(Key = key, Filename = filename)
 
