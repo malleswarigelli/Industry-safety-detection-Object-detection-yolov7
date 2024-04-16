@@ -4,18 +4,24 @@ from isd.logger import logging
 from isd.exception import isdException
 from isd.configuration.s3_operations import S3Operation
 from isd.constant.training_pipeline import *
-from isd.entity.config_entity import DataIngestionConfig, DataValidationConfig
-from isd.entity.artifacts_entity import DataIngestionArtifact, DataValidationArtifact
+from isd.entity.config_entity import DataIngestionConfig, DataValidationConfig, ModelTrainerConfig
+from isd.entity.artifacts_entity import DataIngestionArtifact, DataValidationArtifact, ModelTrainerArtifact
 from isd.components.data_ingestion import DataIngestion
 from isd.components.data_validation import DataValidation
+from isd.components.model_trainer import ModelTraining
+
+
 
 
 
 class TrainingPipeline:
     def __init__(self):
         self.s3_operations= S3Operation()
-        self.data_ingestion_config= DataIngestionConfig()      
+        self.data_ingestion_config= DataIngestionConfig()
         self.data_validation_config= DataValidationConfig()
+        self.model_trainer_config= ModelTrainerConfig()
+        
+        
     
     def start_data_ingestion(self) -> DataIngestionArtifact:
         logging.info("Entering start_data_ingestion method of TrainingPipeline")
@@ -29,8 +35,8 @@ class TrainingPipeline:
         
         except Exception as e:
             raise isdException(e, sys)
-        
-        
+    
+    
     def start_data_validation(self, 
                               data_ingestion_artifact: DataIngestionArtifact
                               ) -> DataValidationArtifact:
@@ -48,12 +54,32 @@ class TrainingPipeline:
             return data_validation_artifact
             
         except Exception as e:
-            raise isdException(e, sys)    
+            raise isdException(e, sys)
+        
+    def start_model_training(self) -> ModelTrainerArtifact:
+        logging.info("Entering start_model_training method of TrainingPipeline")
+        try:            
+            model_trainer= ModelTraining(model_trainer_config= self.model_trainer_config)
+            logging.info("performed model training operation")
+            model_trainer_artifact= model_trainer.initiate_model_trainer()
+            logging.info("Exiting start_model_training method of TrainingPipeline")
+            return model_trainer_artifact
+        except Exception as e:
+            raise isdException(e, sys)
+
+
     
     def run_pipeline(self) -> None:        
         try:
             data_ingestion_artifact= self.start_data_ingestion()
             data_validation_artifact= self.start_data_validation(data_ingestion_artifact=data_ingestion_artifact)
+            
+            if data_validation_artifact.validation_status == True: 
+                model_trainer_artifact= self.start_model_training()
+            else:
+                raise Exception("All expected data dirs, files are not exist, verify data_ingestion component")
+            
+            
             
         except Exception as e:
             raise isdException(e, sys)
