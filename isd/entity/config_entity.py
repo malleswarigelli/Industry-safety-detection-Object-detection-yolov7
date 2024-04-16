@@ -18,7 +18,7 @@ training_pipeline_config:TrainingPipelineConfig = TrainingPipelineConfig()
 @dataclass
 class DataIngestionConfig:
     data_ingestion_dir:str= os.path.join(training_pipeline_config.artifact_dir, DATA_INGESTION_DIR_NAME)
-    feature_store_file_path:str= os.path.join(training_pipeline_config.artifact_dir, DATA_INGESTION_FEATURE_DIR_NAME)
+    feature_store_file_path:str= os.path.join(data_ingestion_dir, DATA_INGESTION_FEATURE_DIR_NAME)
     s3_data_name= DATA_INGESTION_S3_DATA_NAME # "isd_data_mini.zip"
     
 @dataclass

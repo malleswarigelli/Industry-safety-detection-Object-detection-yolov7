@@ -4,8 +4,8 @@ from isd.logger import logging
 from isd.exception import isdException
 from isd.configuration.s3_operations import S3Operation
 from isd.constant.training_pipeline import *
-from isd.entity.config_entity import DataIngestionConfig, DataValidationConfig,
-from isd.entity.artifacts_entity import DataIngestionArtifact, DataValidationArtifact,
+from isd.entity.config_entity import DataIngestionConfig, DataValidationConfig
+from isd.entity.artifacts_entity import DataIngestionArtifact, DataValidationArtifact
 from isd.components.data_ingestion import DataIngestion
 from isd.components.data_validation import DataValidation
 
