@@ -15,7 +15,7 @@ Data Validation related constant start with DATA_VALIDATION VAR NAME
 """
 DATA_VALIDATION_DIR_NAME:str = "data_validation"
 DATA_VALIDATION_STATUS_FILE:str = "status.txt"
-DATA_VALIDATION_ALL_REQUIRED_FILES:list = ["images","labels","classes.names","train.txt","test.txt"]
+DATA_VALIDATION_ALL_REQUIRED_FILES:list = ["images","labels","classes.names","train.txt","val.txt"]
 
 """
 Model Trainer related constant start with MODEL_TRAINER VAR NAME

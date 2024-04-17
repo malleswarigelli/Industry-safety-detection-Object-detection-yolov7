@@ -28,7 +28,7 @@ class DataValidation():
         try:
             validation_status= None
             logging.info("List of expected directories, files to be there")
-            all_files= os.listdir(self.data_ingestion_artifact.feature_store_path)
+            all_files= os.listdir(self.data_ingestion_artifact.feature_store_path) # artifacts/data_ingestion/feature_store
             
             for file in all_files:
                 if file not in self.data_validation_config.required_files_list:

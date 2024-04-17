@@ -1,28 +1,29 @@
+import os.path
 import sys
+import yaml
+import base64
+
+from isd.exception import isdException
+from isd.logger import logging
 
 
-def error_message_detail(error, error_detail: sys):
-    _, _, exc_tb = error_detail.exc_info()
+def read_yaml_file(file_path: str) -> dict:
+    try:
+        with open(file_path, "rb") as yaml_file:
+            logging.info("Read yaml file successfully")
+            return yaml.safe_load(yaml_file)
 
-    file_name = exc_tb.tb_frame.f_code.co_filename
-
-    error_message = "Error occurred python script name [{0}] line number [{1}] error message [{2}]".format(
-        file_name, exc_tb.tb_lineno, str(error)
-    )
-
-    return error_message
+    except Exception as e:
+        raise isdException(e, sys) from e
 
 
-class isdException(Exception):
-    def __init__(self, error_message, error_detail):
-        """
-        :param error_message: error message in string format
-        """
-        super().__init__(error_message)
+def decodeImage(imgstring, fileName):
+    imgdata = base64.b64decode(imgstring)
+    with open("./data/" + fileName, 'wb') as f:
+        f.write(imgdata)
+        f.close()
 
-        self.error_message = error_message_detail(
-            error_message, error_detail=error_detail
-        )
 
-    def __str__(self):
-        return self.error_message
+def encodeImageIntoBase64(croppedImagePath):
+    with open(croppedImagePath, "rb") as f:
+        return base64.b64encode(f.read())

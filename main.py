@@ -1,4 +1,4 @@
-from isd.pipeline.training_pipeline import TrainingPipeline
+from isd.pipeline.training_pipeline import TrainPipeline
 
-train_pipeline= TrainingPipeline()
+train_pipeline= TrainPipeline()
 train_pipeline.run_pipeline()
