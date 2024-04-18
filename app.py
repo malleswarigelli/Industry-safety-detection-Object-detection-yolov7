@@ -6,11 +6,11 @@ from flask import Flask, request, jsonify, render_template,Response
 from flask_cors import CORS, cross_origin
 
 
-
+# initialize flask app
 app = Flask(__name__)
 CORS(app)
 
-
+# user provide image
 class ClientApp:
     def __init__(self):
         self.filename = "inputImage.jpg"
@@ -24,7 +24,7 @@ def trainRoute():
     return 
     
 
-
+# render home page
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -36,10 +36,11 @@ def home():
 def predictRoute():
     try:
         image = request.json['image']
+        # decode image
         decodeImage(image, clApp.filename)
 
-       
-        os.system("cd yolov7/ && python detect.py --weights my_model.pt  --source ../data/inputImage.jpg")
+       #  running detect.py by loading model
+        os.system("cd yolov7/ && python detect.py --weights best.pt  --source ../data/inputImage.jpg")
 
         opencodedbase64 = encodeImageIntoBase64("yolov7/runs/detect/exp/inputImage.jpg")
         result = {"image": opencodedbase64.decode('utf-8')}
@@ -59,5 +60,5 @@ def predictRoute():
 
 if __name__ == "__main__":
     clApp = ClientApp()
-    app.run(host="0.0.0.0", port=8080)
+    app.run(host="0.0.0.0", port=1111)
     
