@@ -45,9 +45,9 @@ class ModelPusher:
 
             # Saving the model pusher artifacts
             model_pusher_artifact = ModelPusherArtifact(
-                bucket_name=self.model_pusher_config.MODEL_BUCKET_NAME,
-                s3_model_path=self.model_pusher_config.S3_MODEL_KEY_PATH,
-            )
+                bucket_name=self.model_pusher_config.MODEL_BUCKET_NAME, # "isd-bucket-23"
+                s3_model_path=self.model_pusher_config.S3_MODEL_KEY_PATH, # "best.pt"
+            ) 
 
             return model_pusher_artifact
 
