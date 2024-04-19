@@ -74,9 +74,11 @@ def predictRoute():
         # get the trained model from s3 bucket
         model_file = download_model_from_S3()
         logging.info(f"downloaded model file from S3 bucket!")
+        # s3 model
+        os.system("cd yolov7/ && python detect.py --weights model_file  --source ../data/inputImage.jpg")
        
        #  running detect.py by loading model saved in yolov7 dir
-        os.system("cd yolov7/ && python detect.py --weights best.pt  --source ../data/inputImage.jpg")
+       # os.system("cd yolov7/ && python detect.py --weights best.pt  --source ../data/inputImage.jpg")
 
         opencodedbase64 = encodeImageIntoBase64("yolov7/runs/detect/exp/inputImage.jpg")
         result = {"image": opencodedbase64.decode('utf-8')}
